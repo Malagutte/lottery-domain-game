@@ -10,7 +10,7 @@ import java.util.TimeZone;
 public class DomainGameApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DomainGameApplication.class, args);
+		SpringApplication.run(DomainGameApplication.class);
 	}
 
 	@PostConstruct
