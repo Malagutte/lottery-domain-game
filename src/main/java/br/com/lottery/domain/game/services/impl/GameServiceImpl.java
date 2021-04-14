@@ -7,7 +7,6 @@ import br.com.lottery.domain.game.repositories.IGameRepository;
 import br.com.lottery.domain.game.repositories.ITaskRepository;
 import br.com.lottery.domain.game.services.IGameService;
 import br.com.lottery.domain.game.threads.UpdateProcessByTypeThread;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,7 @@ public class GameServiceImpl implements IGameService {
 
 
     @Override
-    public Task processUpdateGames() throws Exception {
+    public Task processUpdateGames() {
         Task task = taskRepository.save(Task.builder().id(UUID.randomUUID().toString()).initDate(LocalDateTime.now()).build());
         var asyncProcess = new Runnable() {
             @Override
@@ -53,12 +52,12 @@ public class GameServiceImpl implements IGameService {
     }
 
     @Override
-    public Optional<Game> getGameByNumberAndType(String type, Integer  number) {
+    public Optional<Game> getGameByNumberAndType(String type, Integer number) {
         return gameRepository.findByTypeAndNumber(type.toLowerCase(), number);
     }
 
 
-    private List<TypeDataRequestDTO> getTypesForRequest() throws JsonProcessingException {
+    private List<TypeDataRequestDTO> getTypesForRequest() {
         return Arrays.asList(TypeDataRequestDTO.builder()
                         .type("megasena")
                         .urlParameters("megasena/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbwMPI0sDBxNXAOMwrzCjA0sjIEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wNnUwNHfxcnSwBgIDUyhCvA5EawAjxsKckMjDDI9FQE-F4ca/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KO6H80AU71KG7J0072/res/id=buscaResultado")
@@ -69,7 +68,7 @@ public class GameServiceImpl implements IGameService {
     }
 
 
-    public void updateProcess(Task task) throws Exception {
+    private void updateProcess(Task task) {
         log.info("============== Start update process ==============");
         var types = getTypesForRequest();
 
@@ -85,7 +84,7 @@ public class GameServiceImpl implements IGameService {
             try {
                 t.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error(e);
             }
         });
 

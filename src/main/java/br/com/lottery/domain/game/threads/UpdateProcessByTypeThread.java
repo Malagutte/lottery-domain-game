@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 @Log4j2
 public class UpdateProcessByTypeThread implements Runnable {
 
-    private IGameRepository gameRepository;
-    private TypeDataRequestDTO type;
-    private RestTemplate restTemplate;
+    private final IGameRepository gameRepository;
+    private final TypeDataRequestDTO type;
+    private final RestTemplate restTemplate;
 
     private static final String URL_CAIXA_BASE = "http://loterias.caixa.gov.br/wps/portal/loterias/landing";
 

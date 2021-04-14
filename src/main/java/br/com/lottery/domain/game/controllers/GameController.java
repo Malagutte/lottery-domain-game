@@ -25,7 +25,7 @@ public class GameController {
 
     @ApiResponses(value = {@ApiResponse(code = 202, message = "Ok", response = TaskDTO.class)})
     @PostMapping(value = "/update-database", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getNewGames() {
+    public ResponseEntity<Object> getNewGames() {
 
         try {
             var task = gameService.processUpdateGames();
@@ -41,7 +41,7 @@ public class GameController {
 
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Ok", response = GameDTO.class)})
     @GetMapping(value = "/{type}/{number}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getGameByTypeAndNumber(@PathVariable String type, @PathVariable Integer number) {
+    public ResponseEntity<Object> getGameByTypeAndNumber(@PathVariable String type, @PathVariable Integer number) {
         try {
 
             if(!GameRequestValidation.isValidGetGameRequest(type,number)){
