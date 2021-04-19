@@ -39,11 +39,7 @@ public class GameServiceImpl implements IGameService {
         var asyncProcess = new Runnable() {
             @Override
             public void run() {
-                try {
-                    updateProcess(task);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                updateProcess(task);
             }
         };
         var mainProcessThread = new Thread(asyncProcess);
@@ -84,7 +80,7 @@ public class GameServiceImpl implements IGameService {
             try {
                 t.join();
             } catch (InterruptedException e) {
-                log.error(e);
+                e.printStackTrace();
             }
         });
 

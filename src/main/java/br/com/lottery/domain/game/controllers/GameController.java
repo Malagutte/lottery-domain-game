@@ -2,6 +2,7 @@ package br.com.lottery.domain.game.controllers;
 
 import br.com.lottery.domain.game.dtos.GameDTO;
 import br.com.lottery.domain.game.dtos.TaskDTO;
+import br.com.lottery.domain.game.helpers.ResponseEntiityHelper;
 import br.com.lottery.domain.game.services.IGameService;
 import br.com.lottery.domain.game.validations.GameRequestValidation;
 import io.swagger.annotations.Api;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/game")
@@ -30,10 +33,10 @@ public class GameController {
         try {
             var task = gameService.processUpdateGames();
 
-            return ResponseEntity.accepted().body(task.toDTO());
+            return ResponseEntiityHelper.buildResponseEntity(HttpStatus.ACCEPTED, Optional.of(task.toDTO()));
         } catch (Exception e) {
             log.error(e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntiityHelper.buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, Optional.of(e));
         }
 
     }
@@ -44,19 +47,17 @@ public class GameController {
     public ResponseEntity<Object> getGameByTypeAndNumber(@PathVariable String type, @PathVariable Integer number) {
         try {
 
-            if(!GameRequestValidation.isValidGetGameRequest(type,number)){
+            if (!GameRequestValidation.isValidGetGameRequest(type, number)) {
                 return ResponseEntity.badRequest().build();
             }
-            var searchResult = gameService.getGameByNumberAndType(type, number);
 
-            if (!searchResult.isPresent()) {
-                return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.ok(searchResult.get().toDTO());
+            var gameOptional = gameService.getGameByNumberAndType(type, number);
+
+            return ResponseEntiityHelper.buildResponseEntity(HttpStatus.OK, gameOptional);
 
         } catch (Exception e) {
             log.error(e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+            return ResponseEntiityHelper.buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, Optional.of(e));
         }
 
     }
