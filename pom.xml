@@ -19,6 +19,16 @@
         <sonar.organization>malagutte</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <sonar.coverage.exclusions>
+            src/main/java/db/migrations/* ,
+            src/main/java/br/com/lottery/domain/configs/*,
+            src/main/java/br/com/lottery/domain/dtos/*,
+            src/main/java/br/com/lottery/domain/dtos/requests/*,
+            src/main/java/br/com/lottery/domain/dtos/responses/*,
+            src/main/java/br/com/lottery/domain/models/*,
+        </sonar.coverage.exclusions>
     </properties>
     <dependencies>
         <dependency>
@@ -95,6 +105,33 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.8.0.2131</version>
             </plugin>
         </plugins>
     </build>
