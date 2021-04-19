@@ -25,8 +25,8 @@
             src/main/java/db/migrations/* ,
             src/main/java/br/com/lottery/domain/game/configs/*,
             src/main/java/br/com/lottery/domain/game/dtos/*,
-            src/main/java/br/com/lottery/domain/game/dtos/requests/*,
-            src/main/java/br/com/lottery/domain/game/dtos/responses/*,
+            src/main/java/br/com/lottery/domain/game/dtos/request/*,
+            src/main/java/br/com/lottery/domain/game/dtos/response/*,
             src/main/java/br/com/lottery/domain/game/models/*,
         </sonar.coverage.exclusions>
     </properties>
