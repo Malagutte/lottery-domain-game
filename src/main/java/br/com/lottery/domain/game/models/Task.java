@@ -15,7 +15,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -38,9 +37,9 @@ public class Task {
         return new ObjectMapper().writeValueAsString(this);
     }
 
-    public TaskDTO toDTO(){
+    public TaskDTO toDTO() {
         var dto = new TaskDTO();
-        BeanUtils.copyProperties(this,dto);
+        BeanUtils.copyProperties(this, dto);
         return dto;
     }
 }

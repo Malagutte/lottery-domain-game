@@ -23,11 +23,11 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <sonar.coverage.exclusions>
             src/main/java/db/migrations/* ,
-            src/main/java/br/com/lottery/domain/configs/*,
-            src/main/java/br/com/lottery/domain/dtos/*,
-            src/main/java/br/com/lottery/domain/dtos/requests/*,
-            src/main/java/br/com/lottery/domain/dtos/responses/*,
-            src/main/java/br/com/lottery/domain/models/*,
+            src/main/java/br/com/lottery/domain/game/configs/*,
+            src/main/java/br/com/lottery/domain/game/dtos/*,
+            src/main/java/br/com/lottery/domain/game/dtos/requests/*,
+            src/main/java/br/com/lottery/domain/game/dtos/responses/*,
+            src/main/java/br/com/lottery/domain/game/models/*,
         </sonar.coverage.exclusions>
     </properties>
     <dependencies>

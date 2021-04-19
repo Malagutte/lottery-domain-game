@@ -2,7 +2,7 @@ package br.com.lottery.domain.game.controllers;
 
 import br.com.lottery.domain.game.dtos.GameDTO;
 import br.com.lottery.domain.game.dtos.TaskDTO;
-import br.com.lottery.domain.game.helpers.ResponseEntiityHelper;
+import br.com.lottery.domain.game.helpers.ResponseEntityHelper;
 import br.com.lottery.domain.game.services.IGameService;
 import br.com.lottery.domain.game.validations.GameRequestValidation;
 import io.swagger.annotations.Api;
@@ -33,10 +33,10 @@ public class GameController {
         try {
             var task = gameService.processUpdateGames();
 
-            return ResponseEntiityHelper.buildResponseEntity(HttpStatus.ACCEPTED, Optional.of(task.toDTO()));
+            return ResponseEntity.accepted().body(task.toDTO());
         } catch (Exception e) {
             log.error(e);
-            return ResponseEntiityHelper.buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, Optional.of(e));
+            return ResponseEntityHelper.buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, Optional.of(e));
         }
 
     }
@@ -53,11 +53,15 @@ public class GameController {
 
             var gameOptional = gameService.getGameByNumberAndType(type, number);
 
-            return ResponseEntiityHelper.buildResponseEntity(HttpStatus.OK, gameOptional);
+            if (!gameOptional.isPresent()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntityHelper.buildResponseEntity(HttpStatus.OK, gameOptional.get().toDTO());
 
         } catch (Exception e) {
             log.error(e);
-            return ResponseEntiityHelper.buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, Optional.of(e));
+            return ResponseEntityHelper.buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, e);
         }
 
     }

@@ -24,6 +24,9 @@ public class CaixaResponseDTO {
     private String dataApuracao;
 
     private Collection<String> listaDezenas;
-    
+
+    public String toJson() throws JsonProcessingException {
+        return new ObjectMapper().writeValueAsString(this);
+    }
 
 }

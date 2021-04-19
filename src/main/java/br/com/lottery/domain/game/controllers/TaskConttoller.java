@@ -1,9 +1,7 @@
 package br.com.lottery.domain.game.controllers;
 
 import br.com.lottery.domain.game.dtos.GameDTO;
-import br.com.lottery.domain.game.helpers.ResponseEntiityHelper;
 import br.com.lottery.domain.game.services.ITaskService;
-import br.com.lottery.domain.game.validations.GameRequestValidation;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/task")
@@ -33,11 +29,14 @@ public class TaskConttoller {
     public ResponseEntity<Object> getById(@PathVariable String id) {
         try {
             var taskOptional = taskService.findById(id);
+            if (!taskOptional.isPresent()) {
+                return ResponseEntity.noContent().build();
+            }
 
-            return ResponseEntiityHelper.buildResponseEntity(HttpStatus.OK, taskOptional);
+            return ResponseEntity.ok(taskOptional.get().toDTO());
         } catch (Exception e) {
             log.error(e);
-            return ResponseEntiityHelper.buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, Optional.of(e));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
 
     }

@@ -9,7 +9,7 @@ This application consists of taking the lottery data and saving it in a database
 
 ## Prerequisites
 
-For the execution of this project, the following prerequisites are necessary:
+For the execution of this project, the following are necessary:
 
 - Git
 - Java 15+
@@ -17,7 +17,7 @@ For the execution of this project, the following prerequisites are necessary:
 - Docker Compose 1.24.x
 
 ## Project Execution
-In order for this project to be executed, it is necessary to install a set of dependencies that it has and perform the configuration of the environment that will contain the connections.
+In order to run this project, it is necessary to install all of its dependencies and configure the environment, which contains the connections
 
 
 ### Connections Configuration
@@ -28,7 +28,7 @@ To run the services with `docker-compose` it is first necessary to navigate to t
 docker-compose up -d
 ```
 
-After executing the above command it is possible to see the status of the containers using the following command.
+After running the command above, it is possible to check the status of the containers using the following command
 
 - all services must have the status 'UP'.
 
@@ -38,7 +38,7 @@ docker-compose ps
 
 
 ### Execution 
-In your IDE look for the main class `DomainGameApplication` and in the jvm variables you need to add the following value `-Dspring.profiles.active = local`, just click on run and access the [swagger.](http://localhost:8080/swagger-ui/)
+In your IDE look for the main class `DomainGameApplication` and in the jvm variables you need to add the following value `-Dspring.profiles.active = local`, just click on run and access  access [swagger.](http://localhost:8080/swagger-ui/)
 
 
 
