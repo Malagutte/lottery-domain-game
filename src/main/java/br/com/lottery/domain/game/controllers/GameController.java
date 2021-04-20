@@ -2,6 +2,8 @@ package br.com.lottery.domain.game.controllers;
 
 import br.com.lottery.domain.game.dtos.GameDTO;
 import br.com.lottery.domain.game.dtos.TaskDTO;
+import br.com.lottery.domain.game.dtos.request.SearchRequestDTO;
+import br.com.lottery.domain.game.dtos.response.SearchResponseDTO;
 import br.com.lottery.domain.game.helpers.ResponseEntityHelper;
 import br.com.lottery.domain.game.services.IGameService;
 import br.com.lottery.domain.game.validations.GameRequestValidation;
@@ -37,6 +39,21 @@ public class GameController {
         } catch (Exception e) {
             log.error(e);
             return ResponseEntityHelper.buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, Optional.of(e));
+        }
+
+    }
+
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Ok", response = SearchResponseDTO.class)})
+    @PostMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> searchGames(@RequestBody SearchRequestDTO searchRequest) {
+
+        try {
+            var result = gameService.searchGames(searchRequest);
+
+            return ResponseEntityHelper.buildResponseEntity(HttpStatus.OK, result);
+        } catch (Exception e) {
+            log.error(e);
+            return ResponseEntityHelper.buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, e);
         }
 
     }
