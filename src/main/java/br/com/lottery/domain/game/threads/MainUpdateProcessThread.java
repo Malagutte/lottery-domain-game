@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @AllArgsConstructor
-public class UpdateProcessThread implements Runnable{
+public class MainUpdateProcessThread implements Runnable{
 
     private IGameRepository gameRepository;
     private ITaskRepository taskRepository;
@@ -37,11 +37,12 @@ public class UpdateProcessThread implements Runnable{
             return new Thread(runnable, threadName);
         }).collect(Collectors.toList());
 
-        processTypesAsync.forEach(t -> t.start());
+        processTypesAsync.forEach(Thread::run);
 
         for (Thread thread : processTypesAsync) {
             thread.join();
         }
+
         var taskOpt = taskRepository.findById(taskId);
         if(taskOpt.isPresent()){
             taskOpt.get().setEndDate(LocalDateTime.now());

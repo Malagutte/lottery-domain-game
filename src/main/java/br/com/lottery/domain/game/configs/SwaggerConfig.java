@@ -22,7 +22,7 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("API Domain Game").version(version).build();
+        return new ApiInfoBuilder().title("API Lottery Domain Game").version(version).build();
     }
 
 }

@@ -27,51 +27,50 @@ public class UpdateProcessByTypeThread implements Runnable {
 
     @Override
     public void run() {
-
-
         try {
             var baseUrlType = String.format("%s/%s", URL_CAIXA_BASE, type.getUrlParameters());
             var lastGame = doRequestGame(baseUrlType).getNumero();
 
             for (int i = lastGame; i > 0; i--) {
-                var search = gameRepository.findByTypeAndNumber(type.getType().toLowerCase(), i);
-                if (search.isPresent()) {
-                    continue;
+                try {
+                    var search = gameRepository.findByTypeAndNumber(type.getType().toLowerCase(), i);
+                    if (search.isPresent()) {
+                        continue;
+                    }
+                    processByGame(type.getType(), baseUrlType, i);
+
+                } catch (Exception e) {
+                    log.error("Error to save game {} - {}", type.getType(), i);
+                    log.error(e);
                 }
-                processByGame(type.getType(), baseUrlType, i);
             }
 
-
         } catch (Exception e) {
+            log.error("Error to process game type: {}", type.getType());
             log.error(e);
+
         }
 
     }
 
 
-    private void processByGame(String type, String baseUrlType, Integer gameNumber) throws JsonProcessingException {
-        try {
-            var requestUrl = String.format("%s/%s%s", baseUrlType, "p=concurso=", gameNumber.toString());
-            var requestResult = doRequestGame(requestUrl);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            var gameModel = Game.builder()
-                    .id(UUID.randomUUID().toString())
-                    .number(requestResult.getNumero())
-                    .raffleNumbers(requestResult.getListaDezenas().stream().map(n -> Integer.valueOf(n)).collect(Collectors.toList()))
-                    .type(type.toLowerCase())
-                    .date(LocalDate.parse(requestResult.getDataApuracao(), formatter))
-                    .build();
+    private void processByGame(String type, String baseUrlType, Integer gameNumber) throws Exception {
 
-            gameRepository.save(gameModel);
+        var requestUrl = String.format("%s/%s%s", baseUrlType, "p=concurso=", gameNumber.toString());
+        var requestResult = doRequestGame(requestUrl);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        var gameModel = Game.builder()
+                .id(UUID.randomUUID().toString())
+                .number(requestResult.getNumero())
+                .raffleNumbers(requestResult.getListaDezenas().stream().map(n -> Integer.valueOf(n)).collect(Collectors.toList()))
+                .type(type.toLowerCase())
+                .date(LocalDate.parse(requestResult.getDataApuracao(), formatter))
+                .build();
 
-            log.info("{} - {} saved - {}", type.toLowerCase(), requestResult.getNumero(), gameModel.toJson());
+        gameRepository.save(gameModel);
 
-        } catch (Exception e) {
+        log.info("{} - {} saved - {}", type.toLowerCase(), requestResult.getNumero(), gameModel.toJson());
 
-            log.error("Error to save game {} - {}", type, gameNumber);
-            log.error(e);
-
-        }
     }
 
 

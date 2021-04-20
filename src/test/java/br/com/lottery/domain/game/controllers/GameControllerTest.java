@@ -48,7 +48,7 @@ public class GameControllerTest {
     @Test
     @DisplayName("when try to get game with number 0 should return bad request")
     public void shouldReturnCode400() throws Exception {
-        var requestBuilder = MockMvcRequestBuilders.get("/api/v1/game/megasena/0");
+        var requestBuilder = MockMvcRequestBuilders.get("/api/v1/game/seila/0");
         mockMvc.perform(requestBuilder).andExpect(status().isBadRequest());
     }
 
@@ -60,6 +60,16 @@ public class GameControllerTest {
                 .getGameByNumberAndType("megasena", 1);
         var requestBuilder = MockMvcRequestBuilders.get("/api/v1/game/megasena/1");
         mockMvc.perform(requestBuilder).andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("when try to get game with valid information should return ok")
+    public void shouldReturnCode204IfNotFoundGame() throws Exception {
+        Mockito.doReturn(Optional.empty())
+                .when(gameService)
+                .getGameByNumberAndType("megasena", 1);
+        var requestBuilder = MockMvcRequestBuilders.get("/api/v1/game/megasena/1");
+        mockMvc.perform(requestBuilder).andExpect(status().isNoContent());
     }
 
     @Test
