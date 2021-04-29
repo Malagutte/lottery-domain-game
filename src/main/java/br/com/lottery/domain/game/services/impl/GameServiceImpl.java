@@ -1,5 +1,15 @@
 package br.com.lottery.domain.game.services.impl;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import br.com.lottery.domain.game.dtos.request.SearchRequestDTO;
 import br.com.lottery.domain.game.dtos.response.SearchResponseDTO;
 import br.com.lottery.domain.game.models.Game;
@@ -8,19 +18,8 @@ import br.com.lottery.domain.game.repositories.IGameRepository;
 import br.com.lottery.domain.game.repositories.ITaskRepository;
 import br.com.lottery.domain.game.services.IGameService;
 import br.com.lottery.domain.game.threads.MainUpdateProcessThread;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
-@Log4j2
 public class GameServiceImpl implements IGameService {
 
     @Autowired

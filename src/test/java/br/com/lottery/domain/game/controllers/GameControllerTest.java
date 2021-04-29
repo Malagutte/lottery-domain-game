@@ -1,10 +1,15 @@
 package br.com.lottery.domain.game.controllers;
 
-import br.com.lottery.domain.game.models.Game;
-import br.com.lottery.domain.game.models.Task;
-import br.com.lottery.domain.game.services.IGameService;
-import org.apache.http.ConnectionClosedException;
-import org.junit.jupiter.api.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDate;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +23,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.LocalDate;
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import br.com.lottery.domain.game.models.Game;
+import br.com.lottery.domain.game.models.Task;
+import br.com.lottery.domain.game.services.IGameService;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(GameController.class)

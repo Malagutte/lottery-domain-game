@@ -1,11 +1,16 @@
 package br.com.lottery.domain.game.services;
 
-import br.com.lottery.domain.game.dtos.response.CaixaResponseDTO;
-import br.com.lottery.domain.game.models.Game;
-import br.com.lottery.domain.game.models.Task;
-import br.com.lottery.domain.game.repositories.IGameRepository;
-import br.com.lottery.domain.game.repositories.ITaskRepository;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.UUID;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,13 +20,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.ConnectException;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import br.com.lottery.domain.game.dtos.response.CaixaResponseDTO;
+import br.com.lottery.domain.game.models.Game;
+import br.com.lottery.domain.game.models.Task;
+import br.com.lottery.domain.game.repositories.IGameRepository;
+import br.com.lottery.domain.game.repositories.ITaskRepository;
 
 @SpringBootTest
 public class GameServiceTest {
@@ -37,8 +40,6 @@ public class GameServiceTest {
 
     @MockBean
     private RestTemplate restTemplate;
-
-    private static final String URL_CAIXA_BASE = "http://loterias.caixa.gov.br/wps/portal/loterias/landing";
 
 
     @Test

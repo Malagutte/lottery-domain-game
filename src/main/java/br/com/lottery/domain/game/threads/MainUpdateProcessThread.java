@@ -1,19 +1,19 @@
 package br.com.lottery.domain.game.threads;
 
-import br.com.lottery.domain.game.dtos.request.TypeDataRequestDTO;
-import br.com.lottery.domain.game.models.Task;
-import br.com.lottery.domain.game.repositories.IGameRepository;
-import br.com.lottery.domain.game.repositories.ITaskRepository;
-import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.web.client.RestTemplate;
-
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import org.springframework.web.client.RestTemplate;
+
+import br.com.lottery.domain.game.dtos.request.TypeDataRequestDTO;
+import br.com.lottery.domain.game.repositories.IGameRepository;
+import br.com.lottery.domain.game.repositories.ITaskRepository;
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @AllArgsConstructor
@@ -44,6 +44,7 @@ public class MainUpdateProcessThread implements Runnable{
         }
 
         var taskOpt = taskRepository.findById(taskId);
+        
         if(taskOpt.isPresent()){
             taskOpt.get().setEndDate(LocalDateTime.now());
             taskRepository.save(taskOpt.get());

@@ -1,8 +1,11 @@
 package br.com.lottery.domain.game.controllers;
 
-import br.com.lottery.domain.game.models.Task;
-import br.com.lottery.domain.game.services.IGameService;
-import br.com.lottery.domain.game.services.ITaskService;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,11 +23,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import br.com.lottery.domain.game.models.Task;
+import br.com.lottery.domain.game.services.ITaskService;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(TaskConttoller.class)
