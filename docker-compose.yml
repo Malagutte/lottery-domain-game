@@ -1,33 +1,60 @@
 version: '3.1'
-
 services:
-
-  mongo:
-    image: mongo:latest
-    ports:
-      - 27017:27017
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-      MONGO_INITDB_DATABASE: lottery_db
+  app:
+    image: lottery-domain-app
+    build:
+      context: ./
+      dockerfile: CI-CD/maven.Dockerfile
+    container_name: domain_app
     volumes:
-      - ~/mongo/data:/data/db
-    networks:
-      - core_service_network
-
-  mongo-express:
-    image: mongo-express
-    restart: always
+      - ./:/app
+      - lottery_m2_volume:/root/.m2
+    depends_on:
+      - migrate
+    env_file: .env
     ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: root
-    networks:
-      - core_service_network
+      - "${PORT}:${PORT}"
+    command:
+      - "mvn"
+      - "spring-boot:run"
 
-networks:
-  core_service_network:
-    driver: bridge
-    name: core_service_network
+  postgres:
+    image: postgres:11-bullseye
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - lottery_data_volume:/var/lib/postgresql/data
+    ports:
+      - "${DATABASE_PORT}:5432"
+    healthcheck:
+      test: pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_PASSWORD}
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  migrate:
+    image: migrate/migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./CI-CD/database:/database
+    command:
+      [ "-path", "/database", "-database",  "postgres://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@postgres:${DATABASE_PORT}/${DATABASE_NAME}?sslmode=disable", "up" ]
+
+volumes:
+  lottery_m2_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: /docker-volumes/repository
+      o: bind
+  lottery_data_volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: /docker-volumes/postgres/lottery
+      o: bind

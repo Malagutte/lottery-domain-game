@@ -1,0 +1,23 @@
+server: ${PORT}
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+  jpa:
+    show-sql: ${DATABASE_SHOW_SQL:false}
+    hibernate:
+      ddl-auto: validate
+    database: postgresql
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOSTNAME}:${DATABASE_PORT}/${DATABASE_NAME}
+    hostname: ${DATABASE_HOSTNAME}
+    port: ${DATABASE_PORT}
+    ssl_mode: ${DATABASE_SSL_MODE}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+info:
+  app: 
+    version: ${APP_VERSION}
+

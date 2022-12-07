@@ -5,36 +5,27 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.4</version>
+        <version>3.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.lottery</groupId>
     <artifactId>domain.game</artifactId>
     <version>0.0.1</version>
     <name>domain.game</name>
-    <description>Demo project for Spring Boot</description>
+
     <properties>
-        <java.version>11</java.version>
-        <sonar.projectKey>Malagutte_lottery-domain-game</sonar.projectKey>
-        <sonar.organization>malagutte</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <junit-jupiter.version>5.7.0</junit-jupiter.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <sonar.coverage.exclusions>
-            src/main/java/db/migrations/* ,
-            src/main/java/br/com/lottery/domain/game/configs/*,
-            src/main/java/br/com/lottery/domain/game/dtos/*,
-            src/main/java/br/com/lottery/domain/game/dtos/request/*,
-            src/main/java/br/com/lottery/domain/game/dtos/response/*,
-            src/main/java/br/com/lottery/domain/game/models/*,
-        </sonar.coverage.exclusions>
+
     </properties>
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -44,11 +35,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
             <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -66,27 +60,16 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
-        </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
         </dependency>
+
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
 
@@ -97,66 +80,8 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.8.0.2131</version>
             </plugin>
         </plugins>
     </build>
-
-
-    <profiles>
-        <profile>
-            <id>staging</id>
-            <properties>
-                <spring.profile>staging</spring.profile>
-            </properties>
-        </profile>
-        <profile>
-            <id>local</id>
-            <properties>
-                <spring.profile>local</spring.profile>
-            </properties>
-        </profile>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <spring.profile>prod</spring.profile>
-            </properties>
-        </profile>
-
-    </profiles>
 
 </project>

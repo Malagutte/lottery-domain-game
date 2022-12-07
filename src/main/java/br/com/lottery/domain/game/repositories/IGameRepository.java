@@ -1,15 +1,14 @@
 package br.com.lottery.domain.game.repositories;
 
-import java.util.Optional;
-
-import org.springframework.data.mongodb.repository.MongoRepository;
+import br.com.lottery.domain.game.entities.GameEntity;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.lottery.domain.game.models.Game;
+import java.util.Optional;
 
 @Repository
-public interface IGameRepository extends MongoRepository<Game, String> {
+public interface IGameRepository extends CrudRepository<GameEntity, String> {
 
-    Optional<Game> findByTypeAndNumber(String type, Integer number);
+    Optional<GameEntity> findByTypeAndNumber(String type, Integer number);
 
 }
