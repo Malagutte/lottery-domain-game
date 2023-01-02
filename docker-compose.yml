@@ -1,11 +1,9 @@
 version: '3.1'
 services:
   app:
-    image: lottery-domain-app
-    build:
-      context: ./
-      dockerfile: CI-CD/maven.Dockerfile
+    image: maven:3.8.6-openjdk-18-slim
     container_name: domain_app
+    working_dir: /app
     volumes:
       - ./:/app
       - lottery_m2_volume:/root/.m2
@@ -50,11 +48,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /docker-volumes/repository
+      device: ${HOME}/.m2
       o: bind
   lottery_data_volume:
     driver: local
-    driver_opts:
-      type: none
-      device: /docker-volumes/postgres/lottery
-      o: bind
