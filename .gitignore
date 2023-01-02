@@ -25,7 +25,6 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
-CI-CD/
 !**/src/main/**/build/
 !**/src/test/**/build/
 

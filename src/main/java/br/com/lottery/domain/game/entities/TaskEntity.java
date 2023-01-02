@@ -1,16 +1,14 @@
 package br.com.lottery.domain.game.entities;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -19,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "tasks")
-@JsonNaming(SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class TaskEntity{
 
     @Id

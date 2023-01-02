@@ -1,18 +1,20 @@
 package br.com.lottery.domain.game.entities;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity(name = "awards")
+@Builder
 @Getter
 @Setter
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class AwardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +24,7 @@ public class AwardEntity {
     private Integer hitNumbers;
 
     @Column(nullable = false)
-    private Integer prize;
+    private BigDecimal prize;
 
     @Column(nullable = false, name = "amount_people")
     private Integer amountPeople;

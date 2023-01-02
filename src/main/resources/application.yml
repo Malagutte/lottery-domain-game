@@ -18,6 +18,11 @@ spring:
     password: ${DATABASE_PASSWORD}
 
 info:
-  app: 
+  app:
     version: ${APP_VERSION}
 
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG

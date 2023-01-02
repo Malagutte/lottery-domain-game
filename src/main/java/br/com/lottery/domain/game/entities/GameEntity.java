@@ -1,20 +1,24 @@
 package br.com.lottery.domain.game.entities;
 
+import br.com.lottery.domain.game.dtos.response.CaixaGovResponse;
+import br.com.lottery.domain.game.entities.converter.DetailsObject;
 import br.com.lottery.domain.game.entities.converter.NumbersField;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "games")
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class GameEntity {
 
     @Id
@@ -40,4 +44,8 @@ public class GameEntity {
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<AwardEntity> awards;
+
+    @Column(nullable = false, name = "details", columnDefinition = "jsonb")
+    @Convert(converter = DetailsObject.class)
+    private CaixaGovResponse details;
 }
